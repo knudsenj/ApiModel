@@ -279,10 +279,16 @@ public class Api<ModelType:Object where ModelType:ApiModel> {
     }
     
     private class func objectFromResponseForNamespace(data: AnyObject, namespace: String) -> [String:AnyObject]? {
+        if let parsed = data as? [String:AnyObject] where namespace == "" {
+            return parsed
+        }
         return (data[namespace] as? [String:AnyObject]) ?? (data[namespace.pluralize()] as? [String:AnyObject])
     }
     
     private class func arrayFromResponseForNamespace(data: AnyObject, namespace: String) -> [AnyObject]? {
+        if let parsed = data as? [AnyObject] where namespace == "" {
+            return parsed
+        }
         return (data[namespace] as? [AnyObject]) ?? (data[namespace.pluralize()] as? [AnyObject])
     }
     
